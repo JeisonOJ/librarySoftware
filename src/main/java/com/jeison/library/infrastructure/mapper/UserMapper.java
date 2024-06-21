@@ -9,7 +9,7 @@ import com.jeison.library.api.dto.response.UserResp;
 import com.jeison.library.api.dto.response.UserRespWithDetails;
 import com.jeison.library.domain.entities.User;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING, uses = {LoanMapper.class,ReservationMapper.class})
 public interface UserMapper {
 
     // @Mappings({
@@ -24,8 +24,8 @@ public interface UserMapper {
 
     User reqToEntityToUpdate(UserReqToUpdate userReqToUpdate);
 
-    UserResp EntityToResp(User user);
+    UserResp entityToResp(User user);
 
-    UserRespWithDetails EntityToRespComp(User user);
+    UserRespWithDetails entityToRespComp(User user);
 
 }

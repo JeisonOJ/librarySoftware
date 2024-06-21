@@ -8,13 +8,13 @@ import com.jeison.library.api.dto.response.BookResp;
 import com.jeison.library.api.dto.response.BookRespWithDetails;
 import com.jeison.library.domain.entities.Book;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING, uses = {LoanMapper.class,ReservationMapper.class})
 public interface BookMapper {
 
     Book reqToEntity(BookReq bookReq);
 
-    BookResp EntityToResp(Book book);
+    BookResp entityToResp(Book book);
 
-    BookRespWithDetails EntityToRespComp(Book book);
+    BookRespWithDetails entityToRespComp(Book book);
 
 }
