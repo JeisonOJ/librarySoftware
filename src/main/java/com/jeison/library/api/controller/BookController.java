@@ -89,7 +89,7 @@ public class BookController {
         return ResponseEntity.ok(service.findAll(page - 1, size, sortType));
     }
 
-    @Operation(summary = "Get the entire books list in a paginated manner")
+    @Operation(summary = "Filter books books by title, author and genre")
     @GetMapping("/search")
     public ResponseEntity<List<BookResp>> search(
             @RequestParam(defaultValue = "", required = false) String title,
