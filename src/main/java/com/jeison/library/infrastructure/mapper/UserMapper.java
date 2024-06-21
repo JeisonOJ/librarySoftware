@@ -20,7 +20,7 @@ public interface UserMapper {
     // @Mapping(source = "role", target = "role"),
     // })
 
-    User reqToEntity(UserReq userReq);
+    User reqToEntity(UserReq request);
 
     User reqToEntityToUpdate(UserReqToUpdate userReqToUpdate);
 
