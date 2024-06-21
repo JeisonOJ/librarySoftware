@@ -21,14 +21,8 @@ public interface ReservationMapper {
 
         void updateEntityFromReq(ReservationToUpdate request, @MappingTarget Reservation reservation);
 
-        @Mappings({
-                        @Mapping(source = "reservationDate", target = "reservationDate", dateFormat = "yyyy-MM-dd HH-mm-ss")
-        })
         ReservationResp entityToResp(Reservation Reservation);
 
-        @Mappings({
-                        @Mapping(source = "reservationDate", target = "reservationDate", dateFormat = "yyyy-MM-dd HH-mm-ss")
-        })
         ReservationRespWithDetails entityToRespComp(Reservation Reservation);
 
         List<ReservationResp> entityToList(List<Reservation> loanList);
