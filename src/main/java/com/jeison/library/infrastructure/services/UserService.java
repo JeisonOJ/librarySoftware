@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.jeison.library.api.dto.request.UserReq;
 import com.jeison.library.api.dto.request.UserReqToUpdate;
+import com.jeison.library.api.dto.response.UserResp;
 import com.jeison.library.api.dto.response.UserRespWithDetails;
 import com.jeison.library.domain.entities.User;
 import com.jeison.library.domain.repositories.UserRepository;
@@ -27,12 +28,12 @@ public class UserService implements IUserService{
     
     @Override
     public UserRespWithDetails findById(Long id) {
-        return userMapper.EntityToRespComp(getById(id));
+        return userMapper.entityToRespComp(getById(id));
     }
 
     @Override
-    public UserRespWithDetails create(UserReq request) {
-        return userMapper.EntityToRespComp(userRepository.save(userMapper.reqToEntity(request)));
+    public UserResp create(UserReq request) {
+        return userMapper.entityToResp(userRepository.save(userMapper.reqToEntity(request)));
     }
 
     @Override
@@ -46,12 +47,12 @@ public class UserService implements IUserService{
     }
 
     @Override
-    public UserRespWithDetails update(UserReqToUpdate request, Long id) {
+    public UserResp update(UserReqToUpdate request, Long id) {
         User user = getById(id);
         User userToUpdate = userMapper.reqToEntityToUpdate(request);
         userToUpdate.setId(id);
         userToUpdate.setRole(user.getRole());
-        return userMapper.EntityToRespComp(userRepository.save(userToUpdate));
+        return userMapper.entityToResp(userRepository.save(userToUpdate));
     }
 
 }

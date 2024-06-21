@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.jeison.library.api.dto.errors.ErrorResp;
 import com.jeison.library.api.dto.request.UserReq;
 import com.jeison.library.api.dto.request.UserReqToUpdate;
+import com.jeison.library.api.dto.response.UserResp;
 import com.jeison.library.api.dto.response.UserRespWithDetails;
 import com.jeison.library.infrastructure.abstract_services.IUserService;
 
@@ -46,7 +47,7 @@ public class UserController {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResp.class))
     })
     @PostMapping
-    public ResponseEntity<UserRespWithDetails> createUser(@Validated @RequestBody UserReq userReq) {
+    public ResponseEntity<UserResp> createUser(@Validated @RequestBody UserReq userReq) {
         return ResponseEntity.ok(service.create(userReq));
     }
 
@@ -55,7 +56,7 @@ public class UserController {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResp.class))
     })
     @PutMapping("{id}")
-    public ResponseEntity<UserRespWithDetails> updateUser(@Validated @RequestBody UserReqToUpdate userReq, @PathVariable Long id) {
+    public ResponseEntity<UserResp> updateUser(@Validated @RequestBody UserReqToUpdate userReq, @PathVariable Long id) {
         return ResponseEntity.ok(service.update(userReq, id));
     }
 

@@ -1,8 +1,8 @@
 package com.jeison.library.infrastructure.abstract_services;
 
-public interface CrudService<RQ, UPDATE, RS, ID> {
+public interface CrudService<RQ, UPDATE, RS, RSDETAILED, ID> {
 
-    public RS findById(ID id);
+    public RSDETAILED findById(ID id);
 
     public RS create(RQ request);
 
