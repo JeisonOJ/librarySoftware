@@ -6,8 +6,12 @@ import org.springframework.stereotype.Service;
 import com.jeison.library.api.dto.request.ReservationReq;
 import com.jeison.library.api.dto.request.ReservationToUpdate;
 import com.jeison.library.api.dto.response.ReservationRespWithDetails;
+import com.jeison.library.domain.entities.Book;
 import com.jeison.library.domain.entities.Reservation;
+import com.jeison.library.domain.entities.User;
+import com.jeison.library.domain.repositories.BookRepository;
 import com.jeison.library.domain.repositories.ReservationRepository;
+import com.jeison.library.domain.repositories.UserRepository;
 import com.jeison.library.infrastructure.abstract_services.IReservationService;
 import com.jeison.library.infrastructure.mapper.ReservationMapper;
 import com.jeison.library.utils.exceptions.BadRequestException;
@@ -22,6 +26,10 @@ public class ReservationService implements IReservationService {
     @Autowired
     private final ReservationRepository reservationRepository;
     @Autowired
+    private final UserRepository userRepository;
+    @Autowired
+    private final BookRepository bookRepository;
+    @Autowired
     private final ReservationMapper reservationMapper;
 
     @Override
@@ -31,7 +39,14 @@ public class ReservationService implements IReservationService {
 
     @Override
     public ReservationRespWithDetails create(ReservationReq request) {
-        return reservationMapper.entityToRespComp(reservationRepository.save(reservationMapper.reqToEntity(request)));
+        User user = userRepository.findById(request.getUserId())
+                .orElseThrow(() -> new BadRequestException(ErrorMessage.idNotFound("user")));
+        Book book = bookRepository.findById(request.getBookId())
+                .orElseThrow(() -> new BadRequestException(ErrorMessage.idNotFound("book")));
+        Reservation reservation = reservationMapper.reqToEntity(request);
+        reservation.setBook(book);
+        reservation.setUser(user);
+        return reservationMapper.entityToRespComp(reservationRepository.save(reservation));
 
     }
 
