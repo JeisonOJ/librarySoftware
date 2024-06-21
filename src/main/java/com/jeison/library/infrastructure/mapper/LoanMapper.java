@@ -1,5 +1,7 @@
 package com.jeison.library.infrastructure.mapper;
 
+import java.util.List;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
@@ -14,20 +16,22 @@ import com.jeison.library.domain.entities.Loan;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface LoanMapper {
 
-    Loan reqToEntity(LoanReq loanReq);
+        Loan reqToEntity(LoanReq loanReq);
 
-    Loan reqToEntityToUpdate(LoanReqToUpdate loanReqToUpdate);
+        Loan reqToEntityToUpdate(LoanReqToUpdate loanReqToUpdate);
 
-    @Mappings({
-            @Mapping(source = "loanDate", target = "loanDate", dateFormat = "yyyy-MM-dd HH-mm-ss"),
-            @Mapping(source = "returnDate", target = "returnDate", dateFormat = "yyyy-MM-dd HH-mm-ss")
-    })
-    LoanResp EntityToResp(Loan loan);
+        @Mappings({
+                        @Mapping(source = "loanDate", target = "loanDate", dateFormat = "yyyy-MM-dd HH-mm-ss"),
+                        @Mapping(source = "returnDate", target = "returnDate", dateFormat = "yyyy-MM-dd HH-mm-ss")
+        })
+        LoanResp entityToResp(Loan loan);
 
-    @Mappings({
-            @Mapping(source = "loanDate", target = "loanDate", dateFormat = "yyyy-MM-dd HH-mm-ss"),
-            @Mapping(source = "returnDate", target = "returnDate", dateFormat = "yyyy-MM-dd HH-mm-ss")
-    })
-    LoanRespWithDetails EntityToRespComp(Loan loan);
+        @Mappings({
+                        @Mapping(source = "loanDate", target = "loanDate", dateFormat = "yyyy-MM-dd HH-mm-ss"),
+                        @Mapping(source = "returnDate", target = "returnDate", dateFormat = "yyyy-MM-dd HH-mm-ss")
+        })
+        LoanRespWithDetails entityToRespComp(Loan loan);
+
+        List<LoanResp> entityToList(List<Loan> loanList);
 
 }

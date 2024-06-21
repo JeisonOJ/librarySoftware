@@ -1,5 +1,7 @@
 package com.jeison.library.infrastructure.mapper;
 
+import java.util.List;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
@@ -14,18 +16,20 @@ import com.jeison.library.domain.entities.Reservation;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface ReservationMapper {
 
-    Reservation reqToEntity(ReservationReq ReservationReq);
+        Reservation reqToEntity(ReservationReq ReservationReq);
 
-    Reservation reqToEntityToUpdate(ReservationToUpdate ReservationReqToUpdate);
+        Reservation reqToEntityToUpdate(ReservationToUpdate ReservationReqToUpdate);
 
-    @Mappings({
-            @Mapping(source = "reservationDate", target = "reservationDate", dateFormat = "yyyy-MM-dd HH-mm-ss")
-    })
-    ReservationResp EntityToResp(Reservation Reservation);
+        @Mappings({
+                        @Mapping(source = "reservationDate", target = "reservationDate", dateFormat = "yyyy-MM-dd HH-mm-ss")
+        })
+        ReservationResp entityToResp(Reservation Reservation);
 
-    @Mappings({
-            @Mapping(source = "reservationDate", target = "reservationDate", dateFormat = "yyyy-MM-dd HH-mm-ss")
-    })
-    ReservationRespWithDetails EntityToRespComp(Reservation Reservation);
+        @Mappings({
+                        @Mapping(source = "reservationDate", target = "reservationDate", dateFormat = "yyyy-MM-dd HH-mm-ss")
+        })
+        ReservationRespWithDetails entityToRespComp(Reservation Reservation);
+
+        List<ReservationResp> entityToList(List<Reservation> loanList);
 
 }
