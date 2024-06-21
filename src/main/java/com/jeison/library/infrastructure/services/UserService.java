@@ -42,17 +42,14 @@ public class UserService implements IUserService{
 
     }
 
-    private User getById(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new BadRequestException(ErrorMessage.idNotFound("user")));
-    }
-
     @Override
     public UserResp update(UserReqToUpdate request, Long id) {
         User user = getById(id);
-        User userToUpdate = userMapper.reqToEntityToUpdate(request);
-        userToUpdate.setId(id);
-        userToUpdate.setRole(user.getRole());
-        return userMapper.entityToResp(userRepository.save(userToUpdate));
+        userMapper.updateEntityFromReq(request, user);
+        return userMapper.entityToResp(userRepository.save(user));
     }
-
+    
+    private User getById(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new BadRequestException(ErrorMessage.idNotFound("user")));
+    }
 }
