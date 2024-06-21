@@ -5,6 +5,7 @@ import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.Mappings;
 
 import com.jeison.library.api.dto.request.LoanReq;
@@ -18,7 +19,7 @@ public interface LoanMapper {
 
         Loan reqToEntity(LoanReq loanReq);
 
-        Loan reqToEntityToUpdate(LoanReqToUpdate loanReqToUpdate);
+        void updateEntityFromReq(LoanReqToUpdate request, @MappingTarget Loan loan);
 
         @Mappings({
                         @Mapping(source = "loanDate", target = "loanDate", dateFormat = "yyyy-MM-dd HH-mm-ss"),

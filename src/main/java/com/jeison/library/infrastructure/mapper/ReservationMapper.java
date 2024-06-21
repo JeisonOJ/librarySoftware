@@ -5,6 +5,7 @@ import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.Mappings;
 
 import com.jeison.library.api.dto.request.ReservationReq;
@@ -18,7 +19,7 @@ public interface ReservationMapper {
 
         Reservation reqToEntity(ReservationReq ReservationReq);
 
-        Reservation reqToEntityToUpdate(ReservationToUpdate ReservationReqToUpdate);
+        void updateEntityFromReq(ReservationToUpdate request, @MappingTarget Reservation reservation);
 
         @Mappings({
                         @Mapping(source = "reservationDate", target = "reservationDate", dateFormat = "yyyy-MM-dd HH-mm-ss")

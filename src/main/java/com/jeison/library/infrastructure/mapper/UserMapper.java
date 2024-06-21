@@ -2,6 +2,7 @@ package com.jeison.library.infrastructure.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
+import org.mapstruct.MappingTarget;
 
 import com.jeison.library.api.dto.request.UserReq;
 import com.jeison.library.api.dto.request.UserReqToUpdate;
@@ -22,7 +23,7 @@ public interface UserMapper {
 
     User reqToEntity(UserReq request);
 
-    User reqToEntityToUpdate(UserReqToUpdate userReqToUpdate);
+    void updateEntityFromReq(UserReqToUpdate request, @MappingTarget User user);
 
     UserResp entityToResp(User user);
 
