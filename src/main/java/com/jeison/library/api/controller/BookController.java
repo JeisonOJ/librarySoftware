@@ -22,6 +22,7 @@ import com.jeison.library.api.dto.errors.ErrorResp;
 import com.jeison.library.api.dto.request.BookReq;
 import com.jeison.library.api.dto.response.BookResp;
 import com.jeison.library.api.dto.response.BookRespWithDetails;
+import com.jeison.library.api.dto.response.BookRespWithReservationsAndUsers;
 import com.jeison.library.infrastructure.abstract_services.IBookService;
 import com.jeison.library.utils.enums.SortType;
 
@@ -98,6 +99,15 @@ public class BookController {
             ) {
         
         return ResponseEntity.ok(service.filterBooks(title, author, genre));
+    }
+
+    @Operation(summary = "Get a book and its reservations by its ID number")
+    @ApiResponse(responseCode = "400", description = "When the ID is not found", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResp.class))
+    })
+    @GetMapping("/{id}/reservations")
+    public ResponseEntity<BookRespWithReservationsAndUsers> getByIdReservations(@PathVariable Long id) {
+        return ResponseEntity.ok(service.findBooksReservations(id));
     }
 
 }

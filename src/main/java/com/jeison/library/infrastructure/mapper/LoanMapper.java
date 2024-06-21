@@ -25,6 +25,7 @@ public interface LoanMapper {
         LoanResp entityToResp(Loan loan);
 
         LoanRespWithDetails entityToRespComp(Loan loan);
+
         LoanRespWithBooks entityToRespBooks(Loan loan);
 
         List<LoanResp> entityToList(List<Loan> loanList);

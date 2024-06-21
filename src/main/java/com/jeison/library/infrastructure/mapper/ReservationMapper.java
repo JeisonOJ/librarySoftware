@@ -13,6 +13,7 @@ import com.jeison.library.api.dto.request.ReservationToUpdate;
 import com.jeison.library.api.dto.response.ReservationResp;
 import com.jeison.library.api.dto.response.ReservationRespWithBooks;
 import com.jeison.library.api.dto.response.ReservationRespWithDetails;
+import com.jeison.library.api.dto.response.ReservationRespWithUsers;
 import com.jeison.library.domain.entities.Reservation;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
@@ -25,7 +26,10 @@ public interface ReservationMapper {
         ReservationResp entityToResp(Reservation Reservation);
 
         ReservationRespWithDetails entityToRespComp(Reservation Reservation);
+
         ReservationRespWithBooks entityToRespBooks(Reservation Reservation);
+
+        ReservationRespWithUsers entityToRespUsers(Reservation Reservation);
 
         List<ReservationResp> entityToList(List<Reservation> loanList);
 

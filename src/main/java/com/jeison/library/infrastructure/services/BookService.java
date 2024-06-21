@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.jeison.library.api.dto.request.BookReq;
 import com.jeison.library.api.dto.response.BookResp;
 import com.jeison.library.api.dto.response.BookRespWithDetails;
+import com.jeison.library.api.dto.response.BookRespWithReservationsAndUsers;
 import com.jeison.library.domain.entities.Book;
 import com.jeison.library.domain.repositories.BookRepository;
 import com.jeison.library.infrastructure.abstract_services.IBookService;
@@ -80,5 +81,10 @@ public class BookService implements IBookService {
     public List<BookResp> filterBooks(String title, String author, String genre) {
         List<Book> books = bookRepository.findByTitleContainingAndAuthorContainingAndGenreContaining(title, author, genre);
         return bookMapper.entityToList(books);
+    }
+
+    @Override
+    public BookRespWithReservationsAndUsers findBooksReservations(Long id) {
+        return bookMapper.entityToRespReservations(getById(id));
     }
 }
