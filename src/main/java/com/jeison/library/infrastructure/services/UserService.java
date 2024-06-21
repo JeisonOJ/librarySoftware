@@ -8,6 +8,8 @@ import com.jeison.library.api.dto.request.UserReq;
 import com.jeison.library.api.dto.request.UserReqToUpdate;
 import com.jeison.library.api.dto.response.UserResp;
 import com.jeison.library.api.dto.response.UserRespWithDetails;
+import com.jeison.library.api.dto.response.UserRespWithLoansAndBooks;
+import com.jeison.library.api.dto.response.UserRespWithReservationsAndBooks;
 import com.jeison.library.domain.entities.User;
 import com.jeison.library.domain.repositories.UserRepository;
 import com.jeison.library.infrastructure.abstract_services.IUserService;
@@ -51,5 +53,16 @@ public class UserService implements IUserService{
     
     private User getById(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new BadRequestException(ErrorMessage.idNotFound("user")));
+    }
+
+    @Override
+    public UserRespWithLoansAndBooks findUserLoans(Long id) {
+        return userMapper.entityToResBooks(getById(id));
+    }
+
+    @Override
+    public UserRespWithReservationsAndBooks findUserReservations(Long id) {
+        return userMapper.entityToResReservations(getById(id));
+
     }
 }

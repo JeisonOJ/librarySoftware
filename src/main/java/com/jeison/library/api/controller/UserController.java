@@ -17,6 +17,8 @@ import com.jeison.library.api.dto.request.UserReq;
 import com.jeison.library.api.dto.request.UserReqToUpdate;
 import com.jeison.library.api.dto.response.UserResp;
 import com.jeison.library.api.dto.response.UserRespWithDetails;
+import com.jeison.library.api.dto.response.UserRespWithLoansAndBooks;
+import com.jeison.library.api.dto.response.UserRespWithReservationsAndBooks;
 import com.jeison.library.infrastructure.abstract_services.IUserService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -69,6 +71,24 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "Get an user and its loads by its ID number")
+    @ApiResponse(responseCode = "400", description = "When the ID is not found", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResp.class))
+    })
+    @GetMapping("/{id}/loans")
+    public ResponseEntity<UserRespWithLoansAndBooks> getByIdLoans(@PathVariable Long id) {
+        return ResponseEntity.ok(service.findUserLoans(id));
+    }
+
+    @Operation(summary = "Get an user and its reservations by its ID number")
+    @ApiResponse(responseCode = "400", description = "When the ID is not found", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResp.class))
+    })
+    @GetMapping("/{id}/reservations")
+    public ResponseEntity<UserRespWithReservationsAndBooks> getByIdReservations(@PathVariable Long id) {
+        return ResponseEntity.ok(service.findUserReservations(id));
     }
 
 }
