@@ -1,6 +1,10 @@
 package com.jeison.library.api.controller;
 
+import java.util.List;
+import java.util.Objects;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -9,7 +13,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jeison.library.api.dto.errors.ErrorResp;
@@ -17,6 +23,7 @@ import com.jeison.library.api.dto.request.BookReq;
 import com.jeison.library.api.dto.response.BookResp;
 import com.jeison.library.api.dto.response.BookRespWithDetails;
 import com.jeison.library.infrastructure.abstract_services.IBookService;
+import com.jeison.library.utils.enums.SortType;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -68,6 +75,29 @@ public class BookController {
     public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "Get the entire books list in a paginated manner")
+    @GetMapping
+    public ResponseEntity<Page<BookResp>> getAll(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestHeader(required = false) SortType sortType) {
+        if (Objects.isNull(sortType)) {
+            sortType = SortType.NONE;
+        }
+        return ResponseEntity.ok(service.findAll(page - 1, size, sortType));
+    }
+
+    @Operation(summary = "Get the entire books list in a paginated manner")
+    @GetMapping("/search")
+    public ResponseEntity<List<BookResp>> search(
+            @RequestParam(defaultValue = "", required = false) String title,
+            @RequestParam(defaultValue = "", required = false) String author,
+            @RequestParam(defaultValue = "", required = false) String genre
+            ) {
+        
+        return ResponseEntity.ok(service.filterBooks(title, author, genre));
     }
 
 }

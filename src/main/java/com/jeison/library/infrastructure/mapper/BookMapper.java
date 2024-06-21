@@ -1,5 +1,7 @@
 package com.jeison.library.infrastructure.mapper;
 
+import java.util.List;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.MappingTarget;
@@ -19,5 +21,7 @@ public interface BookMapper {
     BookResp entityToResp(Book book);
 
     BookRespWithDetails entityToRespComp(Book book);
+
+    List<BookResp> entityToList(List<Book> bookList);
 
 }
