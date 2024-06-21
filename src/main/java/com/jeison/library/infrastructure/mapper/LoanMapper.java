@@ -21,16 +21,8 @@ public interface LoanMapper {
 
         void updateEntityFromReq(LoanReqToUpdate request, @MappingTarget Loan loan);
 
-        @Mappings({
-                        @Mapping(source = "loanDate", target = "loanDate", dateFormat = "yyyy-MM-dd HH-mm-ss"),
-                        @Mapping(source = "returnDate", target = "returnDate", dateFormat = "yyyy-MM-dd HH-mm-ss")
-        })
         LoanResp entityToResp(Loan loan);
 
-        @Mappings({
-                        @Mapping(source = "loanDate", target = "loanDate", dateFormat = "yyyy-MM-dd HH-mm-ss"),
-                        @Mapping(source = "returnDate", target = "returnDate", dateFormat = "yyyy-MM-dd HH-mm-ss")
-        })
         LoanRespWithDetails entityToRespComp(Loan loan);
 
         List<LoanResp> entityToList(List<Loan> loanList);

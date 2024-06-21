@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jeison.library.api.dto.errors.ErrorResp;
-import com.jeison.library.api.dto.request.BookReq;
-import com.jeison.library.api.dto.response.BookResp;
-import com.jeison.library.api.dto.response.BookRespWithDetails;
-import com.jeison.library.infrastructure.abstract_services.IBookService;
+import com.jeison.library.api.dto.request.ReservationReq;
+import com.jeison.library.api.dto.request.ReservationToUpdate;
+import com.jeison.library.api.dto.response.ReservationRespWithDetails;
+import com.jeison.library.infrastructure.abstract_services.IReservationService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -26,46 +26,48 @@ import lombok.AllArgsConstructor;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/books")
-public class BookController {
+@RequestMapping("/reservations")
+public class ReservationController {
 
     @Autowired
-    private final IBookService service;
+    private final IReservationService service;
 
-    @Operation(summary = "Get a book by its ID number")
+    @Operation(summary = "Get a reservation by its ID number")
     @ApiResponse(responseCode = "400", description = "When the ID is not found", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResp.class))
     })
     @GetMapping("/{id}")
-    public ResponseEntity<BookRespWithDetails> getById(@PathVariable Long id) {
+    public ResponseEntity<ReservationRespWithDetails> getById(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
-    @Operation(summary = "Create a book")
+    @Operation(summary = "Create a reservation")
     @ApiResponse(responseCode = "400", description = "When the request is not valid", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResp.class))
     })
     @PostMapping
-    public ResponseEntity<BookResp> createBook(@Validated @RequestBody BookReq bookReq) {
-        return ResponseEntity.ok(service.create(bookReq));
+    public ResponseEntity<ReservationRespWithDetails> createReservation(
+            @Validated @RequestBody ReservationReq reservationReq) {
+        return ResponseEntity.ok(service.create(reservationReq));
     }
 
-    @Operation(summary = "Update a book by its ID number")
+    @Operation(summary = "Update a reservation by its ID number")
     @ApiResponse(responseCode = "400", description = "When the request is not valid", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResp.class))
     })
     @PutMapping("{id}")
-    public ResponseEntity<BookResp> updateBook(@Validated @RequestBody BookReq bookReq, @PathVariable Long id) {
-        return ResponseEntity.ok(service.update(bookReq, id));
+    public ResponseEntity<ReservationRespWithDetails> updateReservation(
+            @Validated @RequestBody ReservationToUpdate reservationReq, @PathVariable Long id) {
+        return ResponseEntity.ok(service.update(reservationReq, id));
     }
 
-    @Operation(summary = "Delete a book by its ID number")
-    @ApiResponse(responseCode = "204", description = "Book deleted successfully")
+    @Operation(summary = "Delete a reservation by its ID number")
+    @ApiResponse(responseCode = "204", description = "Reservation deleted successfully")
     @ApiResponse(responseCode = "400", description = "When the ID is not found", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResp.class))
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteReservation(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

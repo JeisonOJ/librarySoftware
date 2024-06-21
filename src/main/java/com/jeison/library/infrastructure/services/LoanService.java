@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import com.jeison.library.api.dto.request.LoanReq;
 import com.jeison.library.api.dto.request.LoanReqToUpdate;
-import com.jeison.library.api.dto.response.LoanResp;
 import com.jeison.library.api.dto.response.LoanRespWithDetails;
 import com.jeison.library.domain.entities.Loan;
 import com.jeison.library.domain.repositories.LoanRepository;
@@ -31,15 +30,15 @@ public class LoanService implements ILoanService{
         
     }
     @Override
-    public LoanResp create(LoanReq request) {
-        return loanMapper.entityToResp(loanRepository.save(loanMapper.reqToEntity(request)));
+    public LoanRespWithDetails create(LoanReq request) {
+        return loanMapper.entityToRespComp(loanRepository.save(loanMapper.reqToEntity(request)));
 
     }
     @Override
-    public LoanResp update(LoanReqToUpdate request, Long id) {
+    public LoanRespWithDetails update(LoanReqToUpdate request, Long id) {
         Loan loan = getById(id);
         loanMapper.updateEntityFromReq(request,loan);
-        return loanMapper.entityToResp(loanRepository.save(loan));
+        return loanMapper.entityToRespComp(loanRepository.save(loan));
     }
     @Override
     public void delete(Long id) {
@@ -48,7 +47,7 @@ public class LoanService implements ILoanService{
     }
 
     private Loan getById(Long id) {
-        return loanRepository.findById(id).orElseThrow(() -> new BadRequestException(ErrorMessage.idNotFound("user")));
+        return loanRepository.findById(id).orElseThrow(() -> new BadRequestException(ErrorMessage.idNotFound("loan")));
     }
 
 }
